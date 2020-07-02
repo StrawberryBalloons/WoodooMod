@@ -59,7 +59,7 @@ local master_postinit = function(inst)
 
 
 	-- todo: Add an example special power here.
-	inst.components.combat.damagemultiplier = 1.00
+	inst.components.combat.damagemultiplier = 0.9
 	-- Stats	
 	inst.components.health:SetMaxHealth(TUNING.WOODOO_HEALTH)
 	inst.components.hunger:SetMax(TUNING.WOODOO_HUNGER)
@@ -77,7 +77,11 @@ local master_postinit = function(inst)
 	inst.components.eater.ignoresspoilage = false
 	inst.components.health.fire_damage_scale = 2
 	inst.components.temperature.inherentinsulation = -75 --(TUNING.WOODOOFIRE)
-	inst.components.combat:SetDefaultDamage(24)
+	inst.components.insulator.insulation = TUNING.INSULATION_LARGE * 1.2
+	inst.components.combat:SetDefaultDamage(10) 
+	inst.components.hunger:SetRate(TUNING.SMALLBIRD_HUNGER/TUNING.SMALLBIRD_STARVE_TIME)
+	inst.components.sanity.night_drain_mult = 0.5
+    inst.components.sanity.neg_aura_mult = 0.5
 
 	local Combat = Class(function(self, inst)
 	inst.components.combat.attackrange = 2
