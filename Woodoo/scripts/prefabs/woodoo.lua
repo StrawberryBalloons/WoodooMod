@@ -12,7 +12,7 @@ TUNING.WOODOO_SANITY = 150
 
 -- Custom starting inventory
 TUNING.GAMEMODE_STARTING_ITEMS.DEFAULT.WOODOO = {
-	"twigs",
+	"cane",
 }
 
 local start_inv = {}
@@ -66,22 +66,24 @@ local master_postinit = function(inst)
 	inst.components.sanity:SetMax(TUNING.WOODOO_SANITY)
 	--inst.components.sanity.custom_rate_fn = SanityForWetness
 	inst.wetness = inst.components.moisture:GetMoisture()	
-	inst.components.moisture.maxDryingRate = 0.01
-	inst.components.moisture.maxPlayerTempDrying = 4
-	inst.components.moisture.maxmoisture = 100
+	inst.components.moisture.maxDryingRate = 1
+	inst.components.moisture.maxPlayerTempDrying = 3
+	inst.components.moisture.maxmoisture = 90
+	inst.components.moisture.maxMoistureRate = 0.375 * 3 -- 50% slower rain weting rate 
 	if inst.components.moisture:GetMoisture() > 70 then inst.components.sanity.dapperness = -TUNING.DAPPERNESS_LARGE * 0.5
 	end
-	inst.components.temperature.overheattemp = 69
+	inst.components.temperature.overheattemp = 65
 	inst.components.temperature.inherentsummerinsulation = 25
 	inst.components.temperature.maxtemp =  40 --(TUNING.WOODOOTEMP)
 	inst.components.eater.ignoresspoilage = false
 	inst.components.health.fire_damage_scale = 2
-	inst.components.temperature.inherentinsulation = -75 --(TUNING.WOODOOFIRE)
-	inst.components.insulator.insulation = TUNING.INSULATION_LARGE * 1.2
-	inst.components.combat:SetDefaultDamage(10) 
-	inst.components.hunger:SetRate(TUNING.SMALLBIRD_HUNGER/TUNING.SMALLBIRD_STARVE_TIME)
+	inst.components.health.vulnerabletoheatdamage = true
+	inst.components.temperature.inherentinsulation = TUNING.INSULATION_HIGH
+	inst.components.combat:SetDefaultDamage(10)
+		inst.components.hunger.hungerrate = 1.3 * TUNING.WILSON_HUNGER_RATE
 	inst.components.sanity.night_drain_mult = 0.5
     inst.components.sanity.neg_aura_mult = 0.5
+    inst.components.builder.magic_bonus = 1
 
 	local Combat = Class(function(self, inst)
 	inst.components.combat.attackrange = 2
@@ -89,7 +91,19 @@ local master_postinit = function(inst)
 	inst.components.combat.min_attack_period = 2
 	inst.components.combat:SetAttackPeriod(2)
     end)
+	inst.components.foodaffinity:AddPrefabAffinity("pumpkincookie", TUNING.AFFINITY_15_CALORIES_LARGE)
  --pumpkin cookies
+ 	--local x, y, z = inst.Transform:GetWorldPosition() --get your position
+	--local ents = TheSim:FindEntities(x, y, z, 2.5, nil, WILSON_TAG, BOOFALO_TAG, SPIDER_TAG) --get position of those arounf you
+	--for i, v in ipairs(ents) do
+			--if not v:HasTag("player") and not v:HasTag("shadow") and not v:HasTag("shadowminion") and not v:HasTag("shadowchesspiece") and v.components.health and not v.components.health:IsDead() and inst.components.health and not inst.components.health:IsDead() then -- No hiding from nightmare creatures, mwuhahaha!
+		--		inst:RemoveTag("notarget")
+		--		inst:AddTag("scarytoprey")
+		--	else
+		--		inst:AddTag("notarget")
+		--		inst:RemoveTag("scarytoprey")
+		--	end
+		--end 
 		inst.OnLoad = onload
     inst.OnNewSpawn = onload
 
