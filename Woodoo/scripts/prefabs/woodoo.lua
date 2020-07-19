@@ -72,18 +72,18 @@ local master_postinit = function(inst)
 	inst.components.moisture.maxMoistureRate = 0.375 * 3 -- 50% slower rain weting rate 
 	if inst.components.moisture:GetMoisture() > 70 then inst.components.sanity.dapperness = -TUNING.DAPPERNESS_LARGE * 0.5
 	end
-	inst.components.temperature.overheattemp = 65
-	inst.components.temperature.inherentsummerinsulation = 25
+	inst.components.temperature.overheattemp = 69
 	inst.components.temperature.maxtemp =  40 --(TUNING.WOODOOTEMP)
 	inst.components.eater.ignoresspoilage = false
 	inst.components.health.fire_damage_scale = 2
 	inst.components.health.vulnerabletoheatdamage = true
-	inst.components.temperature.inherentinsulation = TUNING.INSULATION_HIGH
+	inst.components.temperature.inherentinsulation = -90
 	inst.components.combat:SetDefaultDamage(10)
-		inst.components.hunger.hungerrate = 1.3 * TUNING.WILSON_HUNGER_RATE
+	inst.components.hunger.hungerrate = 0.7 * TUNING.WILSON_HUNGER_RATE
 	inst.components.sanity.night_drain_mult = 0.5
     inst.components.sanity.neg_aura_mult = 0.5
     inst.components.builder.magic_bonus = 1
+	inst.components.foodaffinity:AddPrefabAffinity("pumpkincookie", TUNING.AFFINITY_15_CALORIES_LARGE)
 
 	local Combat = Class(function(self, inst)
 	inst.components.combat.attackrange = 2
@@ -91,7 +91,6 @@ local master_postinit = function(inst)
 	inst.components.combat.min_attack_period = 2
 	inst.components.combat:SetAttackPeriod(2)
     end)
-	inst.components.foodaffinity:AddPrefabAffinity("pumpkincookie", TUNING.AFFINITY_15_CALORIES_LARGE)
  --pumpkin cookies
  	--local x, y, z = inst.Transform:GetWorldPosition() --get your position
 	--local ents = TheSim:FindEntities(x, y, z, 2.5, nil, WILSON_TAG, BOOFALO_TAG, SPIDER_TAG) --get position of those arounf you
@@ -104,7 +103,7 @@ local master_postinit = function(inst)
 		--		inst:RemoveTag("scarytoprey")
 		--	end
 		--end 
-		inst.OnLoad = onload
+	inst.OnLoad = onload
     inst.OnNewSpawn = onload
 
 end
