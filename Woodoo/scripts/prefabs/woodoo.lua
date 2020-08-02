@@ -3,7 +3,34 @@ local MakePlayerCharacter = require "prefabs/player_common"
 
 
 local assets = {
-    Asset("SCRIPT", "scripts/prefabs/player_common.lua"),
+		Asset("SCRIPT", "scripts/prefabs/player_common.lua"),
+        Asset( "ANIM", "anim/player_basic.zip" ),
+        Asset( "ANIM", "anim/player_idles_shiver.zip" ),
+        Asset( "ANIM", "anim/player_actions.zip" ),
+        Asset( "ANIM", "anim/player_actions_axe.zip" ),
+        Asset( "ANIM", "anim/player_actions_pickaxe.zip" ),
+        Asset( "ANIM", "anim/player_actions_shovel.zip" ),
+        Asset( "ANIM", "anim/player_actions_blowdart.zip" ),
+        Asset( "ANIM", "anim/player_actions_eat.zip" ),
+        Asset( "ANIM", "anim/player_actions_item.zip" ),
+        Asset( "ANIM", "anim/player_actions_uniqueitem.zip" ),
+        Asset( "ANIM", "anim/player_actions_bugnet.zip" ),
+        Asset( "ANIM", "anim/player_actions_fishing.zip" ),
+        Asset( "ANIM", "anim/player_actions_boomerang.zip" ),
+        Asset( "ANIM", "anim/player_bush_hat.zip" ),
+        Asset( "ANIM", "anim/player_attacks.zip" ),
+        Asset( "ANIM", "anim/player_idles.zip" ),
+        Asset( "ANIM", "anim/player_rebirth.zip" ),
+        Asset( "ANIM", "anim/player_jump.zip" ),
+        Asset( "ANIM", "anim/player_amulet_resurrect.zip" ),
+        Asset( "ANIM", "anim/player_teleport.zip" ),
+        Asset( "ANIM", "anim/wilson_fx.zip" ),
+        Asset( "ANIM", "anim/player_one_man_band.zip" ),
+        Asset( "ANIM", "anim/shadow_hands.zip" ),
+        Asset( "SOUND", "sound/sfx.fsb" ),
+        Asset( "SOUND", "sound/wilson.fsb" ),
+
+        --Asset( "ANIM", "anim/woodoo.zip" ),
 }
 -- Your character's stats
 TUNING.WOODOO_HEALTH = 50
@@ -39,7 +66,9 @@ end
 -- This initializes for both the server and client. Tags can be added here.
 local common_postinit = function(inst) 
 	inst.MiniMapEntity:SetIcon( "woodoo.tex" )
-	--inst.components.talker.font = TALKINGFONT
+	inst:AddTag("MaleficDoll")
+	--inst.components.talker.font = TALKINGFON
+	T
 	inst.components.talker.colour = Vector3(128/255, 179/255, 95/255)
 end
 
@@ -52,7 +81,7 @@ end
 local master_postinit = function(inst)
 	-- Set starting inventory
     inst.starting_inventory = start_inv[TheNet:GetServerGameMode()] or start_inv.default
-	
+	inst.talker_path_override = "dontstarve_DLC001/characters/"
 	-- choose which sounds this character will play
 	inst.soundsname = "wilson"
 	-- a minimap icon must be specified
@@ -77,7 +106,7 @@ local master_postinit = function(inst)
 	inst.components.eater.ignoresspoilage = false
 	inst.components.health.fire_damage_scale = 2
 	inst.components.health.vulnerabletoheatdamage = true
-	inst.components.temperature.inherentinsulation = -90
+	inst.components.temperature.inherentinsulation = -135
 	inst.components.combat:SetDefaultDamage(10)
 	inst.components.hunger.hungerrate = 0.7 * TUNING.WILSON_HUNGER_RATE
 	inst.components.sanity.night_drain_mult = 0.5
@@ -91,7 +120,7 @@ local master_postinit = function(inst)
 	inst.components.combat.min_attack_period = 2
 	inst.components.combat:SetAttackPeriod(2)
     end)
- --pumpkin cookies
+ --pumpkin cookies, beefalowool, wilson, webber, beardhair, silk, beefalo
  	--local x, y, z = inst.Transform:GetWorldPosition() --get your position
 	--local ents = TheSim:FindEntities(x, y, z, 2.5, nil, WILSON_TAG, BOOFALO_TAG, SPIDER_TAG) --get position of those arounf you
 	--for i, v in ipairs(ents) do
